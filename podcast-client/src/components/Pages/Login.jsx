@@ -3,15 +3,18 @@ import HeadPhone from '../assets/img/headphones.svg';
 import './css/Login.scss';
 import {Link} from "react-router-dom";
 import firebase from 'firebase';
+import {useDispatch, useSelector} from "react-redux";
 import {auth} from '../../firebase/firebaseConfig';
 import * as firebaseui from 'firebaseui';
 import 'firebaseui/dist/firebaseui.css';
+import {setAuthenticate} from '../../actions/loginActions';
 
 function Login (){
+  const dispatch = useDispatch()
 
     var uiConfig = {
         signInFlow: 'popup',
-        signInSuccessUrl: '/',
+        signInSuccessUrl: '/home',
         signInOptions: [ 
           firebase.auth.FacebookAuthProvider.PROVIDER_ID,
           firebase.auth.GoogleAuthProvider.PROVIDER_ID  
@@ -23,7 +26,6 @@ function Login (){
         if (firebaseui.auth.AuthUI.getInstance()) {
           const ui = firebaseui.auth.AuthUI.getInstance()
           ui.start('#firebaseui-auth-container', uiConfig)
-        
         } 
         else {
           const ui = new firebaseui.auth.AuthUI(auth)

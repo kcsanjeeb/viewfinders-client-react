@@ -1,7 +1,4 @@
 import React, {useEffect} from "react";
-import { Provider } from 'react-redux';
-import { PersistGate } from 'redux-persist/integration/react';
-import { store, persistor } from '../store/';
 import PrivateRoute from "..//common/PrivateRoute";
 import './App.scss';
 import { auth } from '../firebase/firebaseConfig';
@@ -12,21 +9,30 @@ import {ThemeContext, themes} from "../api/Theme";
 import musicDB from "../db/music";
 import {useDispatch, useSelector} from "react-redux";
 import {setPlaylist} from "../actions/actions";
-import {setAuthenticate} from '../store/reducer/authenticate';
+import {setAuthenticate} from '../actions/loginActions';
 
 const App = () => {
     const {language} = useSelector(state => state.musicReducer);
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        auth.onAuthStateChanged(async user => {
-          if (user) {
-            dispatch(setAuthenticate(true))
+    // const authenticate = useSelector(state => state.auth)
+    // console.log('authenticate',authenticate.isAuthenticated)
+
+
+      useEffect(() => {
+          try{
+            auth.onAuthStateChanged(async user => {
+                if (user) {
+                  dispatch(setAuthenticate(true))
+                }
+                else {
+                  dispatch(setAuthenticate(false))
+                }
+              })
+          }catch(err){
+              console.log(err.message)
           }
-          else {
-            dispatch(setAuthenticate(false))
-          }
-        })
+       
       }, [])
 
     useEffect(()=>{
@@ -44,20 +50,19 @@ const App = () => {
     },[dispatch, language]);
 
     return (
-        <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
         <ThemeContext.Provider value={themes.light}>
             <>
                 <Router>
                     <Switch>
                         <Route path="/" exact component={Login}/>
-                         <PrivateRoute path="/home" component={Home} />
+                        <Route path="/home" exact component={Home}/>
+                         {/* <PrivateRoute path="/home" component={Home} /> */}
                     </Switch>
                 </Router>
             </>
         </ThemeContext.Provider>
-        </PersistGate>
-    </Provider>
+    //     </PersistGate>
+    // </Provider>
     );
 }
 

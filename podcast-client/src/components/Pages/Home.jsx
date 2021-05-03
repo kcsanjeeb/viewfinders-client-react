@@ -44,6 +44,7 @@ function Home() {
     const [currMusic, setCurrMusic] = useState(null);
     const [Page, setCurrPage] = useState(<MusicCardContainer/>);
 
+
     let pathname = window.location.pathname;
     useEffect(() => {
         setCurrPage(getCurrPage(pathname))

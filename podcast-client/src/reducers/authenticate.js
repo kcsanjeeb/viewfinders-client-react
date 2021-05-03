@@ -1,18 +1,17 @@
-import { createAction, handleAction } from 'redux-actions';
+export const initialState = {
+    isAuthenticated: true
+};
 
-export const setAuthenticate = createAction('SET_AUTHENTICATE');
-
-const INITIAL_VALUES = {
-    isAuthenticated: false
-}
-
-const authReducer = handleAction(
-    'SET_AUTHENTICATE',
-    (state, action) => ({
-        ...state,
-        isAuthenticated: action.payload
-    }),
-    INITIAL_VALUES
-)
+const authReducer = (state = initialState, action) => {
+    switch (action.type){
+        case "SET_AUTHENTICATE":
+            return {
+                ...state,
+                isAuthenticated: action.payload
+            }
+        default:
+            return state;
+    }
+};
 
 export default authReducer;
