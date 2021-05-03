@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import PrivateRoute from "..//common/PrivateRoute";
+import PrivateRoute from "../common/PrivateRoute";
 import './App.scss';
 import { auth } from '../firebase/firebaseConfig';
 import Home from "../components/Pages/Home";
@@ -10,6 +10,7 @@ import musicDB from "../db/music";
 import {useDispatch, useSelector} from "react-redux";
 import {setPlaylist} from "../actions/actions";
 import {setAuthenticate} from '../actions/loginActions';
+import MyPlaylist from '../components/fragment/Playlist';
 
 const App = () => {
     const {language} = useSelector(state => state.musicReducer);
@@ -23,9 +24,11 @@ const App = () => {
           try{
             auth.onAuthStateChanged(async user => {
                 if (user) {
+                    console.log('yser', user)
                   dispatch(setAuthenticate(true))
                 }
                 else {
+                    console.log('yser', user)
                   dispatch(setAuthenticate(false))
                 }
               })
@@ -54,9 +57,9 @@ const App = () => {
             <>
                 <Router>
                     <Switch>
-                        <Route path="/" exact component={Login}/>
+                        <Route path="/login" exact component={Login}/>
                         <Route path="/home" exact component={Home}/>
-                         {/* <PrivateRoute path="/home" component={Home} /> */}
+                         <PrivateRoute path="/myPlaylist" component={MyPlaylist} />
                     </Switch>
                 </Router>
             </>

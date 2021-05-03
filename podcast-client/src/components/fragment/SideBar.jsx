@@ -2,10 +2,12 @@ import React, {useContext} from "react";
 import "../assets/scss/SideBar.scss";
 import SideBarOptions from "./SideBarOptions";
 import {ThemeContext} from "../../api/Theme";
+import { useDispatch, useSelector } from "react-redux";
 import {ExploreOutlined, HomeOutlined, PlaylistPlay, SearchOutlined} from "@material-ui/icons";
 
 function SideBar() {
     const useStyle = useContext(ThemeContext);
+    const authenticated = useSelector(state => state.auth)
     return (
         <aside style={useStyle.component} className={"aside-bar"}>
             <div className="aside-bar-container">
@@ -18,13 +20,16 @@ function SideBar() {
                 {/*<SideBarOptions className={"lib-sub"} Icon={AlbumIcon} href={"/home/album"}  title={"Album"}/>
                 <SideBarOptions className={"lib-sub"} Icon={EmojiPeopleIcon} href={"/home/artist"}  title={"Artist"}/>*/}
             </div>
-            <div className="aside-bar-container playlist">
-                <p className={"p1"}>
-                    <span>MY PLAYLIST</span>
-                </p>
-                <SideBarOptions className={"lib-sub"} Icon={PlaylistPlay} href={"/home/playlist/instrumental"}  title={"Instrumental"}/>
-                <SideBarOptions className={"lib-sub"} Icon={PlaylistPlay} href={"/home/playlist/electronic"}  title={"Electronic"}/>
-            </div>
+            {(authenticated.isAuthenticated) && (
+                  <div className="aside-bar-container playlist">
+                  <p className={"p1"}>
+                      <span>MY PLAYLIST</span>
+                  </p>
+                  <SideBarOptions className={"lib-sub"} Icon={PlaylistPlay} href={"/home/playlist/instrumental"}  title={"Instrumental"}/>
+                  <SideBarOptions className={"lib-sub"} Icon={PlaylistPlay} href={"/home/playlist/electronic"}  title={"Electronic"}/>
+              </div>
+            )}
+           
         </aside>
     );
 }
