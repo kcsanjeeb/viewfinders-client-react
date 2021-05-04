@@ -11,8 +11,9 @@ import {PlaylistPlay} from "@material-ui/icons";
 function Profile() {
 
     const {playlists} = useSelector(state => state.musicReducer);
+    const profile = useSelector(state => state.profile);
     const [mostPlayed, setMostPlayed] = useState([]);
-
+console.log(profile)
     function sortByProperty(property) {
         return function (a, b) {
             if (a[property] > b[property])
@@ -36,12 +37,12 @@ function Profile() {
         <Container>
             <div className={"Profile"}>
                 <div className="top-profile">
-                    <Avatar variant={"rounded"} src={require("../assets/img/avatar2.jpg").default}
+                    <Avatar variant={"rounded"} src={profile.displayImage}
                             style={{width: "150px", height: "150px"}}>
                         VS
                     </Avatar>
                     <div className="profile-detail">
-                        <h3>Sanjeeb KC</h3>
+                        <h3>{profile.displayName}</h3>
                         <span className={"profile-playlist"}>
                             <SideBarOptions className={"lib-sub"} Icon={PlaylistPlay}
                                             href={"/home/playlist/instrumental"} title={"Instrumental"}/>

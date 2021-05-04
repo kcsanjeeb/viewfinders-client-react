@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import PrivateRoute from "../common/PrivateRoute";
 import './App.scss';
 import { auth } from '../firebase/firebaseConfig';
@@ -16,8 +16,8 @@ const App = () => {
     const {language} = useSelector(state => state.musicReducer);
     const dispatch = useDispatch();
 
-    // const authenticate = useSelector(state => state.auth)
-    // console.log('authenticate',authenticate.isAuthenticated)
+    const [displayImage, setDisplayImage] = useState();
+    const [displayName, setDisplayName] = useState();
 
 
       useEffect(() => {
@@ -25,6 +25,8 @@ const App = () => {
             auth.onAuthStateChanged(async user => {
                 if (user) {
                     console.log('yser', user)
+                    setDisplayImage(user.photoURL);
+                    setDisplayName(user.displayName);
                   dispatch(setAuthenticate(true))
                 }
                 else {
@@ -37,6 +39,7 @@ const App = () => {
           }
        
       }, [])
+      console.log(displayName)
 
     useEffect(()=>{
         if (language === null || language.includes("any")){
@@ -57,8 +60,8 @@ const App = () => {
             <>
                 <Router>
                     <Switch>
-                        <Route path="/login" exact component={Login}/>
-                        <Route path="/home" exact component={Home}/>
+                        <Route path="/" exact component={Login}/>
+                        <Route path="/home"  component={Home}/>
                          <PrivateRoute path="/myPlaylist" component={MyPlaylist} />
                     </Switch>
                 </Router>
