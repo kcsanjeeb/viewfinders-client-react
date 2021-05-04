@@ -7,13 +7,14 @@ import Container from "../fragment/Container";
 import Grade from 'grade-js';
 import SideBarOptions from "../fragment/SideBarOptions";
 import {PlaylistPlay} from "@material-ui/icons";
+import { urlExtractor } from '../../services/urlExtractor';
 
 function Profile() {
 
     const {playlists} = useSelector(state => state.musicReducer);
     const profile = useSelector(state => state.profile);
     const [mostPlayed, setMostPlayed] = useState([]);
-console.log(profile)
+
     function sortByProperty(property) {
         return function (a, b) {
             if (a[property] > b[property])
@@ -24,6 +25,14 @@ console.log(profile)
             return 0;
         }
     }
+
+    const [urlAddress, setUrlAddress] = useState('')
+
+    useEffect(() => {
+        setUrlAddress(urlExtractor(window.location.href))
+    }, [window.location.href])
+
+    // console.log('profile page address', urlAddress)
 
     useEffect(() => {
         setMostPlayed(playlists.sort(sortByProperty("timesPlayed")));
