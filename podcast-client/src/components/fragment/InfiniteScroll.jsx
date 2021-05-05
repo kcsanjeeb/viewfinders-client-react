@@ -106,7 +106,7 @@ function createData(Date, Price, ProductName, Uuid) {
 }
 
 
-export default function Tables() {
+export default function InfiniteScroll() {
     const [datas, setDatas] = useState([])
     const [page, setPage] = useState(1);
     const [loading, setLoading] = useState(true);
@@ -138,7 +138,8 @@ export default function Tables() {
     console.log(datas)
 
     const onScrollHandler = debounce(() => {
-        const container = scrollContainer?.current
+        console.log("buttom of page")
+        const container = scrollContainer.current
         if (container.scrollTop + container.clientHeight >= container.scrollHeight) {
             console.log("buttom of page")
             if (loading == false) {
