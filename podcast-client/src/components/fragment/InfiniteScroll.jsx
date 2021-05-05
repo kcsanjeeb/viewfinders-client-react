@@ -146,11 +146,9 @@ export default function Tables() {
             }
         }
     }, 250)
-    console.log('called', scrollContainer)
 
     return (
         <>
-
             <TableContainer style={{marginTop: 20}} component={Paper} onScroll={onScrollHandler} ref={scrollContainer}>
                 <Table aria-label="simple table">
                     <TableHead>
