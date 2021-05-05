@@ -11,6 +11,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {setPlaylist} from "../actions/actions";
 import {setAuthenticate} from '../actions/loginActions';
 import MyPlaylist from '../components/fragment/Playlist';
+import InfiniteScroll from '../components/fragment/InfiniteScroll';
 
 const App = () => {
     const {language} = useSelector(state => state.musicReducer);
@@ -60,8 +61,9 @@ const App = () => {
             <>
                 <Router>
                     <Switch>
-                        <Route path="/" exact component={Login}/>
                         <Route path="/home"  component={Home}/>
+                        <Route path="/" exact component={Login}/>
+                        <Route path="/infinite" exact component={InfiniteScroll}/>
                          <PrivateRoute path="/myPlaylist" component={MyPlaylist} />
                     </Switch>
                 </Router>

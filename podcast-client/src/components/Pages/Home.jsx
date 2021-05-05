@@ -18,6 +18,7 @@ import Playlist from "../fragment/Playlist";
 import { Skeleton } from "@material-ui/lab";
 import { auth } from '../../firebase/firebaseConfig';
 import { setDisplayName, setDisplayImage, setEmail, setPhoneNumber } from '../../actions/profile';
+import { urlExtractor } from '../../services/urlExtractor';
 
 function getCurrPage(pathName) {
     switch (pathName) {
@@ -45,6 +46,19 @@ function Home() {
     const [screenSize, setScreenSize] = useState(undefined);
     const [currMusic, setCurrMusic] = useState(null);
     const [Page, setCurrPage] = useState(<MusicCardContainer />);
+
+
+    const [urlAddress, setUrlAddress] = useState('')
+
+    useEffect(() => {
+        setUrlAddress(urlExtractor(window.location.href))
+    }, [window.location.href])
+
+
+    console.log('home page address',urlAddress)
+    console.log('home ',window.location.href)
+
+
 
     let pathname = window.location.pathname;
     useEffect(() => {
